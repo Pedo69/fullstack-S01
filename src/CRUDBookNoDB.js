@@ -22,6 +22,10 @@ let books = [
     }
 ];
 
+app.get("/", (req, res) => {
+  res.send("Hello World Book");
+});
+
 app.get('/books', (req, res) => {
     res.json(books);
 });
@@ -38,8 +42,8 @@ app.post('/books', (req, res) => {
         titlle: req.body.titlle,
         author: req.body.author
     };
-    book.push(book);
-    res.push(book);
+    books.push(book);
+    res.send(book);
 });
 
 app.put('/books/:id', (req, res) => {
