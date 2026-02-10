@@ -7,7 +7,11 @@ app.use(exprees.json());
 const sequelize = new Sequelize('database', 'username', 'password', {
   host: 'localhost',
   dialect: 'sqlite',
-  storage: './Database/Book.sqlite'
+  storage: './Database/Books.sqlite'
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello World Apicha!");
 });
 
 const Book = sequelize.define('book', {
@@ -28,6 +32,14 @@ const Book = sequelize.define('book', {
 
 sequelize.sync();
 
+app.get('/books', (req,res) => {
+    Book.findAll().then(books => {
+        res.json(books);
+    }).catch(err => {
+        res.status(500).send(err);
+    });
+});
+
 app.get('/book/:id', (req,res) => {
     Book.findByPk(req.params.id).then(book => {
         if(!book) {
@@ -40,8 +52,16 @@ app.get('/book/:id', (req,res) => {
     });
 });
 
-app.post('/book/id', (req,res) => {
-    book.findByPk(req.params.id).then(book => {
+app.post('/books', (req,res) => {
+    Book.create(req.body).then(book => {
+        res.json(book);
+    }).catch(err => {
+        res.status(500).send(err);
+    });
+});
+
+app.put('/books/:id', (req,res) => {
+    Book.findByPk(req.params.id).then(book => {
         if(!book) {
             res.status(404).json({error: "Book not found"});
         } else {
