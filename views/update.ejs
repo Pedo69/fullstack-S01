@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Update Book</title>
+</head>
+<body>
+  <h1>Update Book</h1>
+
+  <form method="post" action="/update/<%= book.id %>">
+    <label>Title:</label>
+    <input type="text" name="title" value="<%= book.title %>" required>
+    <br>
+
+    <label>Author:</label>
+    <input type="text" name="author" value="<%= book.author %>" required>
+    <br>
+
+    <input type="submit" value="Update">
+  </form>
+
+  <a href="/book/<%= book.id %>">View</a>
+  <a href="/delete/<%= book.id %>">Delete</a>
+  <a href="/">Back to List</a>
+</body>
+</html>
